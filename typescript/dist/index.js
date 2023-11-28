@@ -368,3 +368,128 @@
 // if we have not given Person type interface 
 // console.log(myObj[key as keyof typeof myObj])
 // ******************TypeUtility*****************
+// Partial<Type>
+// Required<Type>
+// Readonly<Type>
+// Record<Keys, Type>
+// Pick<Type, Keys>
+// Omit<Type, Keys>
+// Exclude<Type, ExcludedUnion>
+// Extract<Type, Union>
+// NonNulLable<Type>
+// Parameters<Type>
+// ConstructorParameters<Type>
+// ReturnType<Type>
+// InstanceType<Type>
+//Type1) Partial<Type> --> used to make the fields optional
+// type User={
+//    name:string,
+//    email:string, 
+// }
+// Meth1)Here name and email is optional using ?
+// type User2={
+//    name?:string,
+//    email?:string, 
+// }
+// Meth2)here name and email is optional using Partial<Type>
+// type User2=Partial<User>;
+// Type2) Required<Type> --> make the fields as required fields
+// type User={
+//    name?:string,
+//    email:string, 
+// }
+// syntax1)
+// type User2=Required<User>;
+// syntax2)
+// const user:Required<User>={
+//    name:"pratham",
+//    email:"pratham@gmail.com"
+// }
+// Type3)Readonly<Type> -->(makes every field read only) with this we can 
+// only read the field we can't change the fields
+// type User={
+//    name:string,
+//    email:string, 
+// }
+// type User2=Readonly<User>;
+// const user:User2={
+//     name:"pratham",
+//     email:"pratham@gmail.com"
+// }
+// user.name="new name"; // gives error becouse we can only read the fields not change
+// Type4)Record<Keys, Type>
+//-->Without Record 
+// type User={
+//     name:string,
+//     email:string, 
+// }
+//-->With Record 
+// Eg1)
+// type User2=Record<"name"|"email"|"gender",string>
+// Eg2)
+// interface UserInfo{
+//     age:number
+// }
+// type UserName="john"|"andrew"|"elon"|"jack";
+// const users:Record<UserName,UserInfo>={
+//     john:{age:34},
+//     andrew:{age:2},
+//     elon:{age:23},
+//     jack:{age:56},
+// }
+// console.log(users)
+// Pick<Type, Keys>
+// interface OrderInfo{
+//    readonly id:string,
+//    user:string,
+//    city:string,
+//    state:string,
+//    country:string,
+//    status:string   
+// }
+// type ShippingInfo=Pick<OrderInfo,"city"|"state"|"country">
+// Omit<Type, Keys> 
+// interface ShippingInfo{
+//     city:string,
+//     state:string,
+//     country:string,
+// }
+// type Random=Omit<ShippingInfo,"country">
+// Exclude<Type, ExcludedUnion>
+// type MyUnion=string | number | boolean;
+// type random=Exclude<MyUnion,number>; //exclude number from string,number or boolean so random have type string  or boolean
+// type random2=Exclude<MyUnion,number | string>; //exclude number,string from string,number or boolean so random have type boolean
+// Extract<Type, Union>
+// type MyUnion=string | number | boolean;
+// type random=Extract<MyUnion,number>;
+// type random2=Extract<MyUnion,boolean>;
+// NonNulLable<Type> --> removes null,undefined 
+// type MyUnion=string | number | boolean | null | undefined;
+// type random=NonNullable<MyUnion>;
+// type random2=Exclude<MyUnion,null | undefined>;
+// Parameters<Type> --> tells type of parameters of function
+// const myfunc=(a:number,b:string)=>{
+//     console.log(a+b)
+// }
+// type random=Parameters<typeof myfunc>        
+// ConstructorParameters<Type>-->tells type of parameters of class constructor
+// class SampleClass{
+//     constructor(public s:string,public t:string){}
+// }
+// type random=ConstructorParameters<typeof SampleClass>        
+// ReturnType<Type>
+// const myfunc=(a:number,b:string):string=>{
+//     console.log(a+b)
+//     return a+b;
+// }
+// type FuncReturnType=ReturnType<typeof myfunc>
+// InstanceType<Type>
+// class SampleClass{
+//     constructor(public s:string,public t:string){}
+// }
+// type Random=InstanceType<typeof SampleClass> 
+// const user:Random={
+//    s:"dhhd",
+//    t:"jdjd"
+// }  
+// *******************Generics********************* 
