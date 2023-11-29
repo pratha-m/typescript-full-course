@@ -566,5 +566,83 @@
 
 
 // *******************Generics********************* 
+// -->generic means common
 
+// Eg1)
+// const func=<CustomType>(n:CustomType):CustomType=>{
+//     let text:CustomType;
+//     return n;
+// }
+// const ans=func(20);
+// const ans2=func("20");
+// const ans3=func(true);
 
+// Eg2)
+// type Person={
+//     name:string,
+//     age:number
+// }
+// const func=<T>(n:T):T=>{
+//     return n;
+// }
+// const person1:Person={
+//    name:"pratham",
+//    age:12
+// }
+// const ans=func<Person>(person1);
+// console.log(ans)
+
+// also this Array is implemented using generics 
+// const arr:number[]=[];
+// const arr2:Array<number>=[];
+
+// Eg3)
+// const func=<T,U>(n:T,o:U):{n:T,o:U}=>{
+//     return {n,o};
+// }
+// const ans=func<number,string>(20,"hello");
+// console.log(ans)
+
+// Eg4)
+// type Person={
+//     name:string,
+//     age:number
+// }
+// type Person2={
+//     name:string,
+//     age:number,
+//     email:string
+// }
+// const user:Person={
+//     name:"name1",
+//     age:12
+// }
+// const user2:Person2={
+//     name:"name2",
+//     age:277,
+//     email:"email@gmail.com"
+// }
+// const func=<T,U extends T>(n:T,o:U):{n:T,o:U}=>{
+//     return {n,o};
+// }
+// const ans=func<Person,Person2>(user,user2);
+// console.log(ans)
+
+// Eg5)
+type Person={
+    name:string,
+    age:number
+}
+const users:Person[]=[
+    { name:"name1",age:12},
+    { name:"name2",age:13},
+    { name:"name3",age:14},
+    { name:"name4",age:15}
+]
+const filterByPeoples=<T,U extends keyof T>(arr:T[],property:U,value:T[U]):T[]=>{
+    return arr.filter((item)=>item[property]===value);
+}
+const filteredPeopleByName=filterByPeoples(users,"name","name1");
+const filteredPeopleByAge=filterByPeoples(users,"age",15);
+console.log(filteredPeopleByName);
+console.log(filteredPeopleByAge)
