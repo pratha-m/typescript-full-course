@@ -8,23 +8,34 @@ import {
   Typography 
 } from "@mui/material";
 import TodoItem from "./components/TodoItem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getTodos, saveTodos } from "./utils/features";
 
 const App = () => {
-  const [todos,setTodos]=useState<TodoItemType[]>([]);
+  const [todos,setTodos]=useState<TodoItemType[]>(getTodos());
   const [title,setTitle]=useState<TodoItemType["title"]>("");
 
   const completeHandler=(id:TodoItemType["id"]):void=>{
-    console.log(todos)
-    const thatTodo=todos.map(i=>{
+    const newTodos:TodoItemType[]=todos.map(i=>{
       if(i.id===id) i.isCompleted=!i.isCompleted
       return i;
     })
-    console.log(thatTodo);
+    setTodos(newTodos);
   }
+ 
   const deleteHandler=(id:TodoItemType["id"]):void=>{
-    alert(id);
+    const newTodos:TodoItemType[]=todos.filter(i=>i.id!==id)
+    setTodos(newTodos);
   }
+
+  const editHandler=(id:TodoItemType["id"],newTitle:TodoItemType["title"]):void=>{
+    const newTodos:TodoItemType[]=todos.map(i=>{
+      if(i.id===id) i.title=newTitle
+      return i;
+    })
+    setTodos(newTodos);
+  }
+
   const submitHandler=():void=>{
      const newTodo:TodoItemType={
       title:title,
@@ -34,6 +45,10 @@ const App = () => {
      setTodos(prev=>{return([...prev,newTodo])})
      setTitle("");
   }
+
+  useEffect(()=>{
+     saveTodos(todos)
+  },[todos])
     
   return (
     <Container maxWidth="sm" sx={{height:"100vh"}}>
@@ -49,6 +64,7 @@ const App = () => {
                todo={i}
                completeHandler={completeHandler}
                deleteHandler={deleteHandler}
+               editHandler={editHandler}
             />
         ))}
       </Stack>
